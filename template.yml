@@ -19,6 +19,10 @@ Parameters:
 #       Type: Canary10Percent5Minutes
 
 Resources:
+  #
+  # API Definitions
+  #
+
   HelloWorld:
     Type: AWS::Serverless::Function
     Properties:
@@ -38,3 +42,35 @@ Resources:
           Properties:
             Path: /
             Method: post
+
+  ListResources:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: list.handler
+      Runtime: python3.6
+      Policies:
+        - DynamoDBCrudPolicy:
+          TableName: !Ref ResourcesTable
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /list
+            Method: get
+
+  #
+  # DynamoDB Definitions
+  #
+
+  ResourcesTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'resources']]
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      SSESpecification:
+        SSEEnabled: true

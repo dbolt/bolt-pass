@@ -1,8 +1,7 @@
 import unittest
 import index
 
-
-class TestHandlerCase(unittest.TestCase):
+class ListTest(unittest.TestCase):
 
     def test_response(self):
         print("testing response.")
@@ -10,7 +9,7 @@ class TestHandlerCase(unittest.TestCase):
         print(result)
         self.assertEqual(result['statusCode'], 200)
         self.assertEqual(result['headers']['Content-Type'], 'application/json')
-        self.assertIn('Hello World', result['body'])
+        self.assertIn('Hello World List', result['body'])
 
 
 if __name__ == '__main__':
