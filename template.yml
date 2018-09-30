@@ -48,9 +48,13 @@ Resources:
     Properties:
       Handler: list.handler
       Runtime: python3.6
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref ResourcesTable
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      #Policies:
+      #  - AWSLambdaBasicExecutionRole
+      #  - DynamoDBCrudPolicy:
+      #      TableName: !Ref ResourcesTable
       Events:
         GetEvent:
           Type: Api
