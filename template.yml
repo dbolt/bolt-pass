@@ -65,16 +65,16 @@ Resources:
   # DynamoDB Definitions
   #
 
-  #ResourcesTable:
-  #  Type: AWS::Serverless::SimpleTable
-  #  Properties:
-  #    TableName:
-  #      !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'resources']]
-  #    PrimaryKey:
-  #      Name: id
-  #      Type: String
-  #    ProvisionedThroughput:
-  #      ReadCapacityUnits: 5
-  #      WriteCapacityUnits: 5
-  #    SSESpecification:
-  #      SSEEnabled: true
+  ResourcesTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName:
+        !Join ['-', [!Ref 'ProjectId', 'resources']]
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      SSESpecification:
+        SSEEnabled: true
