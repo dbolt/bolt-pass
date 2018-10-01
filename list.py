@@ -5,8 +5,9 @@ from boto3.dynamodb.conditions import Key
 
 QUERY_STRING_PARAMS_KEY = 'queryStringParameters'
 ROOT_KEY = 'root'
+RESOURCES_TABLE = 'bolt-pass-resources-1'
 
-table = boto3.resource('dynamodb').Table('bolt-pass-resources')
+table = boto3.resource('dynamodb').Table(RESOURCES_TABLE)
 
 def handler(event, context):
     print('Event: ' + json.dumps(event))
