@@ -78,6 +78,12 @@ Resources:
         SSEEnabled: true
       AttributeDefinitions:
         -
+          AttributeName: 'root'
+          AttributeType: 'S'
+        -
+          AttributeName: 'suffix'
+          AttributeType: 'S'
+        -
           AttributeName: 'key'
           AttributeType: 'B'
       KeySchema:
