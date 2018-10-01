@@ -83,13 +83,10 @@ Resources:
         -
           AttributeName: 'suffix'
           AttributeType: 'S'
-        -
-          AttributeName: 'key'
-          AttributeType: 'B'
       KeySchema:
         -
-          AttributeName: "root"
-          KeyType: "HASH"
+          AttributeName: 'root'
+          KeyType: 'HASH'
         -
-          AttributeName: "suffix"
+          AttributeName: 'suffix'
           KeyType: "RANGE"
