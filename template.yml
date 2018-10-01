@@ -67,15 +67,23 @@ Resources:
   #
 
   ResourcesTable:
-    Type: AWS::Serverless::SimpleTable
+    Type: AWS::DynamoDB::Table
     Properties:
       TableName:
         !Join ['-', [!Ref 'ProjectId', 'resources']]
-      PrimaryKey:
-        Name: id
-        Type: String
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
       SSESpecification:
         SSEEnabled: true
+      AttributeDefinitions:
+        -
+          AttributeName: 'key'
+          AttributeType: 'B'
+      KeySchema:
+        -
+          AttributeName: "root"
+          KeyType: "HASH"
+        -
+          AttributeName: "suffix"
+          KeyType: "RANGE"
