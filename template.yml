@@ -89,4 +89,4 @@ Resources:
           KeyType: 'HASH'
         -
           AttributeName: 'suffix'
-          KeyType: "RANGE"
+          KeyType: 'RANGE'

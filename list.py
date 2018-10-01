@@ -1,18 +1,37 @@
 import json
 import datetime
 import boto3
+from boto3.dynamodb.conditions import Key
+
+QUERY_STRING_PARAMS_KEY = 'queryStringParameters'
+ROOT_KEY = 'root'
 
 table = boto3.resource('dynamodb').Table('bolt-pass-resources')
 
 def handler(event, context):
     print('Event: ' + json.dumps(event))
-    response = table.get_item(Key={ 'id': 'id-1' })
+
+    prefix = get_root(event)
+    if root is None:
+        response = table.scan()
+    else:
+        response = table.query(
+            KeyConditionExpression=Key(ROOT_KEY).eq(root)
+        )
+
     print('DynamoDB Response: ' + json.dumps(response))
 
     data = {
         'output': 'Hello World List',
-        'timestamp': datetime.datetime.utcnow().isoformat()
+        'timestamp': datetime.datetime.utcnow().isoformat(),
+        'response': response
     }
     return {'statusCode': 200,
             'body': json.dumps(data),
             'headers': {'Content-Type': 'application/json'}}
+
+def get_root(event): 
+    params = event.get(QUERY_STRING_PARAMS_KEY, {})
+    if params is None:
+        params = {}
+    return params.get(PREFIX_KEY, '')
