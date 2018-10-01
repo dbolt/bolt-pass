@@ -12,20 +12,18 @@ table = boto3.resource('dynamodb').Table(RESOURCES_TABLE)
 def handler(event, context):
     print('Event: ' + json.dumps(event))
 
-    prefix = get_root(event)
+    root = get_root(event)
     if root is None:
         response = table.scan()
     else:
         response = table.query(
             KeyConditionExpression=Key(ROOT_KEY).eq(root)
         )
-
     print('DynamoDB Response: ' + json.dumps(response))
 
+    resources = [item for item in response['Items']] 
     data = {
-        'output': 'Hello World List',
-        'timestamp': datetime.datetime.utcnow().isoformat(),
-        'response': response
+        'resources': resources
     }
     return {'statusCode': 200,
             'body': json.dumps(data),
@@ -33,6 +31,6 @@ def handler(event, context):
 
 def get_root(event): 
     params = event.get(QUERY_STRING_PARAMS_KEY, {})
-    if params is None:
-        params = {}
-    return params.get(PREFIX_KEY, '')
+    if params is not None:
+        return params.get(ROOT_KEY, None)
+    return None
