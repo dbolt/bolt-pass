@@ -70,7 +70,8 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName:
-        !Join ['-', [!Ref 'ProjectId', 'resources']]
+        # CloudFormation doesn't allow modification on existing tables, so will append numbers on as versions
+        !Join ['-', [!Ref 'ProjectId', 'resources', '1']]
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
